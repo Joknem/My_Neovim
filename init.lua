@@ -68,6 +68,19 @@ require("lazy").setup({
 		event = "VimEnter",
 		dependencies = { { "nvim-tree/nvim-web-devicons" } },
 	},
+	--git
+	{
+		"tpope/vim-fugitive",
+		event = "VeryLazy",
+		cmd = "Git",
+	},
+	{
+		"lewis6991/gitsigns.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("gitsigns").setup()
+		end,
+	},
 	--telescope to find something
 	{
 		keys = {
@@ -92,17 +105,31 @@ require("lazy").setup({
 		},
 	},
 	--nvim-tree
+	--{
+	--	"nvim-tree/nvim-tree.lua",
+	--	version = "*",
+	--	lazy = false,
+	--	dependencies = { "nvim-tree/nvim-web-devicons" },
+	--	config = function()
+	--		require("nvim-tree").setup({})
+	--	end,
+	--	keys = {
+	--		{ "<leader>t", ":NvimTreeToggle<CR>", desc = "Toggle Nvimtree state" },
+	--	},
+	--},
 	{
-		"nvim-tree/nvim-tree.lua",
-		version = "*",
-		lazy = false,
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			require("nvim-tree").setup({})
-		end,
+		"preservim/nerdtree",
+		event = "VeryLazy",
 		keys = {
-			{ "<leader>t", ":NvimTreeToggle<CR>", desc = "Toggle Nvimtree state" },
+			{ "<leader>t", ":NERDTreeToggle<CR>", desc = "toggle nerdtree" },
 		},
+		cmd = { "NERDTreeToggle", "NERDTree", "NERDTreeFind" },
+		config = function()
+			vim.cmd([[
+			let NERDTreeShowNumbers = 1
+			autocmd FileType nerdtree setlocal relativenumber
+			]])
+		end,
 	},
 	{
 		"akinsho/bufferline.nvim",
@@ -209,7 +236,7 @@ db.custom_header = {
 	" ⠈⠓⠶⣶⣾⣿⣿⣿⣧⡀⠀⠈⠒⢤⣀⣀⡀⠀⠀⣀⣀⡠⠚⠁⠀⢀⡼⠃⠀⠀ ",
 	" ⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣷⣤⣤⣤⣤⣭⣭⣭⣭⣭⣥⣤⣤⣤⣴⣟⠁    ",
 }
-
+-- vim doc
 require("neodev").setup({
 	library = {
 		enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
@@ -254,6 +281,13 @@ require("lspconfig").pyright.setup({
 	capabilities = capabilities,
 })
 require("lspconfig").clangd.setup({
+	capabilities = capabilities,
+	cmd = {
+		"clangd",
+		"--query-driver=/usr/bin/clang",
+	},
+})
+require("lspconfig").ltex.setup({
 	capabilities = capabilities,
 })
 --require()
@@ -355,5 +389,4 @@ cmp.setup.cmdline(":", {
 		{ name = "cmdline" },
 	}),
 })
--- Set up lspconfig.
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
