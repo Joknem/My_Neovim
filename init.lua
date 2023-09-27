@@ -10,6 +10,7 @@ set.softtabstop = 4
 set.tabstop = 4
 set.smartcase = true
 set.showcmd = true
+set.encoding = "UTF-8"
 vim.opt.signcolumn = "yes"
 --vim.opts.s
 --clipboard highlight for 0.3s
@@ -117,6 +118,7 @@ require("lazy").setup({
 	--		{ "<leader>t", ":NvimTreeToggle<CR>", desc = "Toggle Nvimtree state" },
 	--	},
 	--},
+	--nerdtree
 	{
 		"preservim/nerdtree",
 		event = "VeryLazy",
@@ -130,7 +132,20 @@ require("lazy").setup({
 			autocmd FileType nerdtree setlocal relativenumber
 			]])
 		end,
+		dependencies = {
+			"Xuyuanp/nerdtree-git-plugin",
+			"ryanoasis/vim-devicons",
+		},
 	},
+	--session save
+	{
+		"folke/persistence.nvim",
+		event = "BufReadPre",
+		config = function()
+			require("persistence").setup()
+		end,
+	},
+	--bufferline
 	{
 		"akinsho/bufferline.nvim",
 		version = "*",
@@ -390,3 +405,9 @@ cmp.setup.cmdline(":", {
 	}),
 })
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
+--cursor at last change position
+local args = vim.api.nvim_get_vvar("argv")
+if #args > 2 then
+else
+	require("persistence").load({ last = true })
+end
