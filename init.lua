@@ -29,10 +29,10 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>-", "<C-W>s")
 vim.keymap.set("n", "<leader>\\", "<C-W>v")
 vim.keymap.set("i", "jk", "<Esc>")
-vim.keymap.set("n", "<C-h>", "<C-W>h")
-vim.keymap.set("n", "<C-l>", "<C-W>l")
-vim.keymap.set("n", "<C-k>", "<C-W>k")
-vim.keymap.set("n", "<C-j>", "<C-W>j")
+vim.keymap.set("n", "<leader>h", "<C-W>h")
+vim.keymap.set("n", "<leader>l", "<C-W>l")
+vim.keymap.set("n", "<leader>k", "<C-W>k")
+vim.keymap.set("n", "<leader>j", "<C-W>j")
 vim.keymap.set("n", "j", [[v:count ? 'j' : 'gj']], { noremap = true, expr = true })
 vim.keymap.set("n", "<leader>[", "<C-o>", opt)
 vim.keymap.set("n", "<leader>]", "<C-i>", opt)
@@ -41,6 +41,10 @@ vim.keymap.set("n", "<leader>qq", ":wq<CR>", opt)
 vim.keymap.set("n", "<leader>gun", ":q!<CR>", opt)
 vim.keymap.set("n", "<C-z>", ":u<CR>", opt)
 vim.keymap.set("n", "<leader>nh", ":nohlsearch<CR>", opt)
+vim.keymap.set("n", "J", "5j", opt)
+vim.keymap.set("n", "H", "5h", opt)
+vim.keymap.set("n", "L", "5l", opt)
+vim.keymap.set("n", "K", "5k", opt)
 --lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -86,9 +90,9 @@ require("lazy").setup({
 	{
 		keys = {
 			{ "<leader>fs", ":Telescope find_files<CR>", desc = "find files" },
-			{ "<leader>/", ":Telescope live_grep<CR>", desc = "grep file" },
-			{ "<leader>rs", ":Telescope resume<CR>", desc = "resume" },
-			{ "<leader>of", ":Telescope oldfiles<CR>", desc = "oldfiles" },
+			{ "<leader>/",  ":Telescope live_grep<CR>",  desc = "grep file" },
+			{ "<leader>rs", ":Telescope resume<CR>",     desc = "resume" },
+			{ "<leader>of", ":Telescope oldfiles<CR>",   desc = "oldfiles" },
 		},
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.1",
@@ -105,38 +109,38 @@ require("lazy").setup({
 			theme = "monokai-pro",
 		},
 	},
-	--nvim-tree
-	--{
-	--	"nvim-tree/nvim-tree.lua",
-	--	version = "*",
-	--	lazy = false,
-	--	dependencies = { "nvim-tree/nvim-web-devicons" },
-	--	config = function()
-	--		require("nvim-tree").setup({})
-	--	end,
-	--	keys = {
-	--		{ "<leader>t", ":NvimTreeToggle<CR>", desc = "Toggle Nvimtree state" },
-	--	},
-	--},
-	--nerdtree
+	--	nvim - tree
 	{
-		"preservim/nerdtree",
-		event = "VeryLazy",
-		keys = {
-			{ "<leader>t", ":NERDTreeToggle<CR>", desc = "toggle nerdtree" },
-		},
-		cmd = { "NERDTreeToggle", "NERDTree", "NERDTreeFind" },
+		"nvim-tree/nvim-tree.lua",
+		version = "*",
+		lazy = false,
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			vim.cmd([[
-			let NERDTreeShowNumbers = 1
-			autocmd FileType nerdtree setlocal relativenumber
-			]])
+			require("nvim-tree").setup({})
 		end,
-		dependencies = {
-			"Xuyuanp/nerdtree-git-plugin",
-			"ryanoasis/vim-devicons",
+		keys = {
+			{ "<leader>t", ":NvimTreeToggle<CR>", desc = "Toggle Nvimtree state" },
 		},
 	},
+	--nerdtree
+	--	{
+	--		"preservim/nerdtree",
+	--		event = "VeryLazy",
+	--		keys = {
+	--			{ "<leader>t", ":NERDTreeToggle<CR>", desc = "toggle nerdtree" },
+	--		},
+	--		cmd = { "NERDTreeToggle", "NERDTree", "NERDTreeFind" },
+	--		config = function()
+	--			vim.cmd([[
+	--			let NERDTreeShowNumbers = 1
+	--			autocmd FileType nerdtree setlocal relativenumber
+	--			]])
+	--		end,
+	--		dependencies = {
+	--			"Xuyuanp/nerdtree-git-plugin",
+	--			"ryanoasis/vim-devicons",
+	--		},
+	--	},
 	--session save
 	{
 		"folke/persistence.nvim",
@@ -154,7 +158,7 @@ require("lazy").setup({
 		keys = {
 			{ "<S-h>", ":BufferLineCyclePrev<CR>", opt },
 			{ "<S-l>", ":BufferLineCycleNext<CR>", opt },
-			{ "<C-w>", ":bdelete %<CR>", opt },
+			{ "<C-w>", ":bdelete %<CR>",           opt },
 		},
 		config = function()
 			require("bufferline").setup()
@@ -228,7 +232,7 @@ require("monokai-pro").setup({
 	styles = {
 		comment = { italic = true },
 		keyword = { italic = true }, -- any other keyword
-		type = { italic = true }, -- (preferred) int, long, char, etc
+		type = { italic = true },    -- (preferred) int, long, char, etc
 		storageclass = { italic = true }, -- static, register, volatile, etc
 		structure = { italic = true }, -- struct, union, enum, etc
 		parameter = { italic = true }, -- parameter pass in function
@@ -326,7 +330,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		local opts = { buffer = ev.buf }
 		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+		vim.keymap.set("n", "D", vim.lsp.buf.hover, opts)
 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
 		vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
