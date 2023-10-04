@@ -5,9 +5,9 @@ set.clipboard = "unnamed"
 set.cursorline = true
 set.autoindent = true
 set.smartindent = true
-set.shiftwidth = 4
-set.softtabstop = 4
-set.tabstop = 4
+set.shiftwidth = 2
+set.softtabstop = 2
+set.tabstop = 2
 set.smartcase = true
 set.showcmd = true
 set.encoding = "UTF-8"
@@ -45,6 +45,12 @@ vim.keymap.set("n", "J", "5j", opt)
 vim.keymap.set("n", "H", "5h", opt)
 vim.keymap.set("n", "L", "5l", opt)
 vim.keymap.set("n", "K", "5k", opt)
+--nnoremap <silent><leader>ls <cmd>lua vim.lsp.buf.document_symbol()<CR>
+--nnoremap <silent><leader>ll <cmd>lua vim.lsp.buf.references()<CR>
+--nnoremap <silent><leader>lg <cmd>lua vim.lsp.buf.definition()<CR>
+--nnoremap <silent><leader>la <cmd>lua vim.lsp.buf.code_action()<CR>
+--nnoremap <silent><leader>l; <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+--nnoremap <silent><leader>l, <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 --lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -90,9 +96,9 @@ require("lazy").setup({
 	{
 		keys = {
 			{ "<leader>fs", ":Telescope find_files<CR>", desc = "find files" },
-			{ "<leader>/",  ":Telescope live_grep<CR>",  desc = "grep file" },
-			{ "<leader>rs", ":Telescope resume<CR>",     desc = "resume" },
-			{ "<leader>of", ":Telescope oldfiles<CR>",   desc = "oldfiles" },
+			{ "<leader>/", ":Telescope live_grep<CR>", desc = "grep file" },
+			{ "<leader>rs", ":Telescope resume<CR>", desc = "resume" },
+			{ "<leader>of", ":Telescope oldfiles<CR>", desc = "oldfiles" },
 		},
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.1",
@@ -158,10 +164,32 @@ require("lazy").setup({
 		keys = {
 			{ "<S-h>", ":BufferLineCyclePrev<CR>", opt },
 			{ "<S-l>", ":BufferLineCycleNext<CR>", opt },
-			{ "<C-w>", ":bdelete %<CR>",           opt },
+			{ "<C-w>", ":bdelete %<CR>", opt },
 		},
 		config = function()
 			require("bufferline").setup()
+		end,
+	},
+	{
+		"ojroques/nvim-lspfuzzy",
+		dependencies = { { "junegunn/fzf" }, { "junegunn/fzf.vim" } },
+		config = function()
+			require("lspfuzzy").setup({
+				methods = "all", -- either 'all' or a list of LSP methods (see below)
+				jump_one = true, -- jump immediately if there is only one location
+				save_last = false, -- save last location results for the :LspFuzzyLast command
+				callback = nil, -- callback called after jumping to a location
+				fzf_preview = { -- arguments to the FZF '--preview-window' option
+					"right:+{2}-/2",
+				}, -- preview on the right and centered on entry
+				fzf_action = { -- FZF actions
+					["ctrl-t"] = "tab split", -- go to location in a new tab
+					["ctrl-v"] = "vsplit", -- go to location in a vertical split
+					["ctrl-x"] = "split", -- go to location in a horizontal split
+				},
+				fzf_modifier = ":~:.", -- format FZF entries, see |filename-modifiers|
+				fzf_trim = true,
+			})
 		end,
 	},
 	--lsp and auto cmp
@@ -228,7 +256,7 @@ require("lazy").setup({
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
 			require("nvim-treesitter.configs").setup({
-				ensured_installed = { "lua", "vim", "c", "make", "markdown" },
+				ensured_installed = { "lua", "vim", "c", "make", "markdown", "python", "verilog", "json" },
 				sync_install = false,
 				auto_install = true,
 				highlight = {
@@ -307,7 +335,7 @@ require("monokai-pro").setup({
 	styles = {
 		comment = { italic = true },
 		keyword = { italic = true }, -- any other keyword
-		type = { italic = true },    -- (preferred) int, long, char, etc
+		type = { italic = true }, -- (preferred) int, long, char, etc
 		storageclass = { italic = true }, -- static, register, volatile, etc
 		structure = { italic = true }, -- struct, union, enum, etc
 		parameter = { italic = true }, -- parameter pass in function
@@ -377,10 +405,6 @@ require("lspconfig").pyright.setup({
 })
 require("lspconfig").clangd.setup({
 	capabilities = capabilities,
-	cmd = {
-		"clangd",
-		"--query-driver=/usr/bin/clang",
-	},
 })
 require("lspconfig").ltex.setup({
 	capabilities = capabilities,
@@ -453,7 +477,7 @@ cmp.setup({
 	}),
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
-		{ name = "lu snip" }, -- For luasnip users.
+		{ name = "lua snip" }, -- For luasnip users.
 		-- { name = 'ultisnips' }, -- For ultisnips users.
 		-- { name = 'snippy' }, -- For snippy users.
 	}, {
