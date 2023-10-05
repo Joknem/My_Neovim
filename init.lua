@@ -45,13 +45,8 @@ vim.keymap.set("n", "J", "5j", opt)
 vim.keymap.set("n", "H", "5h", opt)
 vim.keymap.set("n", "L", "5l", opt)
 vim.keymap.set("n", "K", "5k", opt)
---nnoremap <silent><leader>ls <cmd>lua vim.lsp.buf.document_symbol()<CR>
---nnoremap <silent><leader>ll <cmd>lua vim.lsp.buf.references()<CR>
---nnoremap <silent><leader>lg <cmd>lua vim.lsp.buf.definition()<CR>
---nnoremap <silent><leader>la <cmd>lua vim.lsp.buf.code_action()<CR>
---nnoremap <silent><leader>l; <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
---nnoremap <silent><leader>l, <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
---lazy.nvim
+vim.keymap.set("n", "<leader>p", ":Files<CR>")
+vim.keymap.set("n", "<leader>b", ":Buffers<CR>")
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -79,6 +74,13 @@ require("lazy").setup({
 		event = "VimEnter",
 		dependencies = { { "nvim-tree/nvim-web-devicons" } },
 	},
+	{
+		"nvim-lua/plenary.nvim",
+	},
+	--auto comment
+	{
+		"preservim/nerdcommenter",
+	},
 	--git
 	{
 		"tpope/vim-fugitive",
@@ -91,18 +93,6 @@ require("lazy").setup({
 		config = function()
 			require("gitsigns").setup()
 		end,
-	},
-	--telescope to find something
-	{
-		keys = {
-			{ "<leader>fs", ":Telescope find_files<CR>", desc = "find files" },
-			{ "<leader>/", ":Telescope live_grep<CR>", desc = "grep file" },
-			{ "<leader>rs", ":Telescope resume<CR>", desc = "resume" },
-			{ "<leader>of", ":Telescope oldfiles<CR>", desc = "oldfiles" },
-		},
-		"nvim-telescope/telescope.nvim",
-		tag = "0.1.1",
-		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 	--lualine
 	{
@@ -128,32 +118,9 @@ require("lazy").setup({
 			{ "<leader>t", ":NvimTreeToggle<CR>", desc = "Toggle Nvimtree state" },
 		},
 	},
-	--nerdtree
-	--	{
-	--		"preservim/nerdtree",
-	--		event = "VeryLazy",
-	--		keys = {
-	--			{ "<leader>t", ":NERDTreeToggle<CR>", desc = "toggle nerdtree" },
-	--		},
-	--		cmd = { "NERDTreeToggle", "NERDTree", "NERDTreeFind" },
-	--		config = function()
-	--			vim.cmd([[
-	--			let NERDTreeShowNumbers = 1
-	--			autocmd FileType nerdtree setlocal relativenumber
-	--			]])
-	--		end,
-	--		dependencies = {
-	--			"Xuyuanp/nerdtree-git-plugin",
-	--			"ryanoasis/vim-devicons",
-	--		},
-	--	},
-	--session save
+	-- verilog snippet
 	{
-		"folke/persistence.nvim",
-		event = "BufReadPre",
-		config = function()
-			require("persistence").setup()
-		end,
+		"vhda/verilog_systemverilog.vim",
 	},
 	--bufferline
 	{
@@ -346,18 +313,51 @@ require("monokai-pro").setup({
 vim.cmd.colorscheme("monokai-pro")
 vim.opt.termguicolors = true
 local db = require("dashboard")
-db.custom_header = {
-	"   ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣴⣶⣶⣶⣶⣶⠶⣶⣤⣤⣀⠀⠀⠀⠀⠀⠀ ",
-	" ⠀⠀⠀⠀⠀⠀⠀⢀⣤⣾⣿⣿⣿⠁⠀⢀⠈⢿⢀⣀⠀⠹⣿⣿⣿⣦⣄⠀⠀⠀ ",
-	" ⠀⠀⠀⠀⠀⠀⣴⣿⣿⣿⣿⣿⠿⠀⠀⣟⡇⢘⣾⣽⠀⠀⡏⠉⠙⢛⣿⣷⡖⠀ ",
-	" ⠀⠀⠀⠀⠀⣾⣿⣿⡿⠿⠷⠶⠤⠙⠒⠀⠒⢻⣿⣿⡷⠋⠀⠴⠞⠋⠁⢙⣿⣄ ",
-	" ⠀⠀⠀⠀⢸⣿⣿⣯⣤⣤⣤⣤⣤⡄⠀⠀⠀⠀⠉⢹⡄⠀⠀⠀⠛⠛⠋⠉⠹⡇ ",
-	" ⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⣀⣠⣤⣤⣤⣤⣤⣤⣤⣼⣇⣀⣀⣀⣛⣛⣒⣲⢾⡷ ",
-	" ⢀⠤⠒⠒⢼⣿⣿⠶⠞⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⣼⠃ ",
-	" ⢮⠀⠀⠀⠀⣿⣿⣆⠀⠀⠻⣿⡿⠛⠉⠉⠁⠀⠉⠉⠛⠿⣿⣿⠟⠁⠀⣼⠃⠀ ",
-	" ⠈⠓⠶⣶⣾⣿⣿⣿⣧⡀⠀⠈⠒⢤⣀⣀⡀⠀⠀⣀⣀⡠⠚⠁⠀⢀⡼⠃⠀⠀ ",
-	" ⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣷⣤⣤⣤⣤⣭⣭⣭⣭⣭⣥⣤⣤⣤⣴⣟⠁    ",
-}
+db.setup({
+	theme = "doom",
+	config = {
+		header = {
+			"																 ",
+			"																 ",
+			"																 ",
+			"																 ",
+			"																 ",
+			"   ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣴⣶⣶⣶⣶⣶⠶⣶⣤⣤⣀⠀⠀⠀⠀⠀⠀ ",
+			" ⠀⠀⠀⠀⠀⠀⠀⢀⣤⣾⣿⣿⣿⠁⠀⢀⠈⢿⢀⣀⠀⠹⣿⣿⣿⣦⣄⠀⠀⠀ ",
+			" ⠀⠀⠀⠀⠀⠀⣴⣿⣿⣿⣿⣿⠿⠀⠀⣟⡇⢘⣾⣽⠀⠀⡏⠉⠙⢛⣿⣷⡖⠀ ",
+			" ⠀⠀⠀⠀⠀⣾⣿⣿⡿⠿⠷⠶⠤⠙⠒⠀⠒⢻⣿⣿⡷⠋⠀⠴⠞⠋⠁⢙⣿⣄ ",
+			" ⠀⠀⠀⠀⢸⣿⣿⣯⣤⣤⣤⣤⣤⡄⠀⠀⠀⠀⠉⢹⡄⠀⠀⠀⠛⠛⠋⠉⠹⡇ ",
+			" ⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⣀⣠⣤⣤⣤⣤⣤⣤⣤⣼⣇⣀⣀⣀⣛⣛⣒⣲⢾⡷ ",
+			" ⢀⠤⠒⠒⢼⣿⣿⠶⠞⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⣼⠃ ",
+			" ⢮⠀⠀⠀⠀⣿⣿⣆⠀⠀⠻⣿⡿⠛⠉⠉⠁⠀⠉⠉⠛⠿⣿⣿⠟⠁⠀⣼⠃⠀ ",
+			" ⠈⠓⠶⣶⣾⣿⣿⣿⣧⡀⠀⠈⠒⢤⣀⣀⡀⠀⠀⣀⣀⡠⠚⠁⠀⢀⡼⠃⠀⠀ ",
+			" ⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣷⣤⣤⣤⣤⣭⣭⣭⣭⣭⣥⣤⣤⣤⣴⣟⠁    ",
+		}, --your header
+		center = {
+			{ icon = "  ", desc = "Recently lastest session    ", shortcut = "Leader s l", action = "" },
+			{ icon = "  ", desc = "Recently opened files       ", shortcut = "Leader f h", action = "" },
+			{
+				icon = "  ",
+				desc = "Find File                   ",
+				shortcut = "leader f f",
+				action = "",
+			},
+			{ icon = "  ", desc = "File Browser                ", shortcut = "leader f b", action = "" },
+			{ icon = "  ", desc = "Find Word                   ", shortcut = "leader f w", action = "" },
+			{
+				icon = "  ",
+				desc = "Open Personal dotfiles      ",
+				shortcut = "leader e e",
+				action = "edit $MYVIMRC",
+			},
+		},
+		footer = function()
+			local footer = { "", "  Have fun with neovim" }
+			print(footer)
+			return footer
+		end,
+	},
+})
 -- vim doc
 require("neodev").setup({
 	library = {
@@ -407,9 +407,6 @@ require("lspconfig").clangd.setup({
 	capabilities = capabilities,
 })
 require("lspconfig").ltex.setup({
-	capabilities = capabilities,
-})
-require("lspconfig").svlangserver.setup({
 	capabilities = capabilities,
 })
 --require("lspconfig").docdoc.setup({})
@@ -514,8 +511,3 @@ cmp.setup.cmdline(":", {
 })
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 --cursor at last change position
-local args = vim.api.nvim_get_vvar("argv")
-if #args > 2 then
-else
-	require("persistence").load({ last = true })
-end

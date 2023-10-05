@@ -15,6 +15,7 @@
   "mason.nvim": { "branch": "main", "commit": "d66c60e17dd6fd8165194b1d14d21f7eb2c1697a" },
   "monokai-pro.nvim": { "branch": "master", "commit": "488a0152331c59a33d7f8bdef6eb88dae299c808" },
   "neodev.nvim": { "branch": "main", "commit": "ddf29935af5a510307850919d6772ea6a4e2c008" },
+  "nerdcommenter": { "branch": "master", "commit": "d2e21d417f6c788b11ae3b90d7ac478930dead36" },
   "null-ls.nvim": { "branch": "main", "commit": "0010ea927ab7c09ef0ce9bf28c2b573fc302f5a7" },
   "nvim-autopairs": { "branch": "master", "commit": "de4f7138a68d5d5063170f2182fd27faf06b0b54" },
   "nvim-cmp": { "branch": "main", "commit": "5dce1b778b85c717f6614e3f4da45e9f19f54435" },
@@ -27,5 +28,6 @@
   "persistence.nvim": { "branch": "main", "commit": "4b8051c01f696d8849a5cb8afa9767be8db16e40" },
   "plenary.nvim": { "branch": "master", "commit": "9ce85b0f7dcfe5358c0be937ad23e456907d410b" },
   "telescope.nvim": { "branch": "master", "commit": "c1a2af0af69e80e14e6b226d3957a064cd080805" },
+  "verilog_systemverilog.vim": { "branch": "master", "commit": "74e533b5f8f169af86af27d7206814103b35efcb" },
   "vim-fugitive": { "branch": "master", "commit": "99db68d9b3304580bd383da7aaee05c7a954a344" }
 }
