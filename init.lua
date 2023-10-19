@@ -26,7 +26,10 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 local opt = { noremap = true, silent = true }
 vim.keymap.set("n", "k", [[v:count ? 'k' : 'gk']], { noremap = true, expr = true })
 vim.g.mapleader = " "
+vim.keymap.set("n", "<leader>z", ":Files<CR>")
+vim.keymap.set("n", "<leader>a", ":Ag<CR>")
 vim.keymap.set("n", "<leader>-", "<C-W>s")
+vim.keymap.set("n", "<leader>x", "<C-W>q")
 vim.keymap.set("n", "<leader>\\", "<C-W>v")
 vim.keymap.set("i", "jk", "<Esc>")
 vim.keymap.set("n", "<leader>h", "<C-W>h")
