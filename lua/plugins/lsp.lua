@@ -113,7 +113,7 @@ return {
 									includeIndexing = { "**/*.{sv,svh}" },
 									excludeIndexing = { "test/**/*.sv*" },
 									defines = {},
-									launchConfiguration = "/tools/verilator -sv -Wall --lint-only",
+									launchConfiguration = "/Users/joknem/fpga_essentials/oss-cad-suite/bin/iverilog",
 									formatCommand = "/tools/verible-verilog-format",
 								}
 							elseif path == "/path/to/project2" then
@@ -121,8 +121,8 @@ return {
 									includeIndexing = { "**/*.{sv,svh}" },
 									excludeIndexing = { "sim/**/*.sv*" },
 									defines = {},
-									launchConfiguration = "/tools/verilator -sv -Wall --lint-only",
-									formatCommand = "/tools/verible-verilog-format",
+									launchConfiguration = "/Users/joknem/fpga_essentials/oss-cad-suite/bin/iverilog",
+									formatCommand = "/Users/joknem/fpga_essentials/oss-cad-suite/bin/iverilog",
 								}
 							end
 
