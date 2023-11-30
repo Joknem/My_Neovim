@@ -8,7 +8,7 @@ return {
 			{ "<C-q>", ":Telescope oldfiles<CR>", desc = "oldfiles" },
 		},
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.1",
+		tag = "0.1.4",
 		-- or                              , branch = '0.1.1',
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},

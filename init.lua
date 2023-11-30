@@ -12,6 +12,7 @@ set.smartcase = true
 set.showcmd = true
 set.encoding = "UTF-8"
 vim.opt.signcolumn = "yes"
+vim.opt.termguicolors = true
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	pattern = { "*" },
 	callback = function()
@@ -47,7 +48,7 @@ vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
---vim.keymap.set("n", "/", ":highlight Search guibg purple")
+vim.keymap.set("n", "gpd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -61,5 +62,3 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
-
-vim.opt.termguicolors = true

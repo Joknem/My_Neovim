@@ -37,4 +37,11 @@ return {
 			})
 		end,
 	},
+	---------------float window display definiton ...-----------------
+	{
+		"rmagatti/goto-preview",
+		config = function()
+			require("goto-preview").setup({})
+		end,
+	},
 }
