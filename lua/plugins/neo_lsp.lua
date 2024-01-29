@@ -33,34 +33,34 @@ return {
         },
         vimls = {},
         svlangserver = {
-          config = function ()
+          config = function()
             local nvim_lsp = require("lspconfig")
-					nvim_lsp.svlangserver.setup({
-						on_init = function(client)
-							local path = client.workspace_folders[1].name
+            nvim_lsp.svlangserver.setup({
+              on_init = function(client)
+                local path = client.workspace_folders[1].name
 
-							if path == "/path/to/project1" then
-								client.config.settings.systemverilog = {
-									includeIndexing = { "**/*.{sv,svh,v}", "*.{sv, v}" },
-									excludeIndexing = { "**/*.{sv, v}" },
-									defines = {},
-									launchConfiguration = "/Users/joknem/tools/fpga_essentials/oss-cad-suite/bin/verilator",
-									--formatCommand = "/tools/verible-verilog-format",
-								}
-							elseif path == "/path/to/project2" then
-								client.config.settings.systemverilog = {
-									includeIndexing = { "**/*.{sv,svh,v}", "*.{sv, v}" },
-									excludeIndexing = { "**/*.{.sv, v}" },
-									defines = {},
-									launchConfiguration = "/Users/joknem/tools/fpga_essentials/oss-cad-suite/bin/verilator",
-									--formatCommand = "/Users/joknem/fpga_essentials/oss-cad-suite/bin/iverilog",
-								}
-							end
+                if path == "/path/to/project1" then
+                  client.config.settings.systemverilog = {
+                    includeIndexing = { "**/*.{sv,svh,v}", "*.{sv, v}" },
+                    excludeIndexing = { "**/*.{sv, v}" },
+                    defines = {},
+                    launchConfiguration = "/Users/joknem/tools/fpga_essentials/oss-cad-suite/bin/verilator",
+                    --formatCommand = "/tools/verible-verilog-format",
+                  }
+                elseif path == "/path/to/project2" then
+                  client.config.settings.systemverilog = {
+                    includeIndexing = { "**/*.{sv,svh,v}", "*.{sv, v}" },
+                    excludeIndexing = { "**/*.{.sv, v}" },
+                    defines = {},
+                    launchConfiguration = "/Users/joknem/tools/fpga_essentials/oss-cad-suite/bin/verilator",
+                    --formatCommand = "/Users/joknem/fpga_essentials/oss-cad-suite/bin/iverilog",
+                  }
+                end
 
-							client.notify("workspace/didChangeConfiguration")
-							return true
-						end,
-					})
+                client.notify("workspace/didChangeConfiguration")
+                return true
+              end,
+            })
           end
         }
       }
