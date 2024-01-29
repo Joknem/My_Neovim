@@ -1,18 +1,24 @@
-local set = vim.o
-set.number = true
-set.relativenumber = true
-set.clipboard = "unnamed"
-set.cursorline = true
-set.autoindent = true
-set.smartindent = true
-set.shiftwidth = 2
-set.softtabstop = 2
-set.tabstop = 2
-set.smartcase = true
-set.showcmd = true
-set.encoding = "UTF-8"
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.clipboard = "unnamed"
+vim.opt.wrap = false
+vim.opt.cursorline = true
+vim.opt.expandtab = true
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.tabstop = 2
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.showcmd = true
+vim.opt.encoding = "UTF-8"
 vim.opt.signcolumn = "yes"
 vim.opt.termguicolors = true
+vim.opt.autochdir = true
+--vim.opt.list = true
+--vim.opt.listchars = "tab:>•,nbsp:+,trail:•,extends:⮕,precedes:⬅"
+vim.opt.undofile = true
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	pattern = { "*" },
 	callback = function()
@@ -21,11 +27,21 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 		})
 	end,
 })
+vim.api.nvim_create_autocmd("TermOpen", { pattern = "term://*", command = [[startinsert]] })
+vim.api.nvim_create_autocmd("BufReadPost", {
+	pattern = "*",
+	callback = function()
+		local line = vim.fn.line
+		if line("'\"") > 1 and line("'\"") <= line("$") then
+			vim.cmd("normal! g'\"")
+		end
+	end,
+})
 local opt = { noremap = true, silent = true }
 vim.keymap.set("n", "k", [[v:count ? 'k' : 'gk']], { noremap = true, expr = true })
 vim.g.mapleader = " "
+vim.keymap.set({'n','t'}, '<leader>mm', '<cmd>Lspsaga term_toggle<CR>')
 vim.keymap.set("n", "<leader>z", ":Files<CR>")
-vim.keymap.set("n", "<leader>a", ":Ag<CR>")
 vim.keymap.set("n", "<leader>-", "<C-W>s")
 vim.keymap.set("n", "<leader>x", "<C-W>q")
 vim.keymap.set("n", "<leader>\\", "<C-W>v")
@@ -43,12 +59,8 @@ vim.keymap.set("n", "<leader>gun", ":q!<CR>", opt)
 vim.keymap.set("n", "<C-z>", ":u<CR>", opt)
 vim.keymap.set("n", "<leader>nh", ":nohlsearch<CR>", opt)
 vim.keymap.set("n", "<leader>p", ":Files<CR>")
-vim.keymap.set("n", "<leader>b", ":Buffers<CR>")
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
-vim.keymap.set("n", "gpd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({

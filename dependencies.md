@@ -1,0 +1,8 @@
+- node
+- ripgrep
+- rustc
+- yarn
+- clangd
+- pyright
+- black(python format)
+- pynvim
