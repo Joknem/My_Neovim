@@ -173,6 +173,8 @@ return {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'onsails/lspkind.nvim',
+      --"zbirenbaum/copilot.lua",
+      --"zbirenbaum/copilot-cmp",
     },
     config = function()
       local has_words_before = function()
@@ -187,14 +189,14 @@ return {
       cmp.setup({
         window = {
           completion = {
-            winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,Search:None',
+            winhighlight = 'normal:pmenu,floatborder:pmenu,search:none',
             col_offset = -3,
             side_padding = 0,
             border = 'rounded',
             scrollbar = true,
           },
           documentation = {
-            winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,Search:None',
+            winhighlight = 'normal:pmenu,floatborder:pmenu,search:none',
             border = 'rounded',
             scrollbar = true,
           },
@@ -202,12 +204,10 @@ return {
         formatting = {
           fields = { 'kind', 'abbr', 'menu' },
           format = function(entry, vim_item)
-            local kind =
-                require('lspkind').cmp_format({ mode = 'symbol', maxwidth = 50 })(entry, vim_item)
+            local kind = require('lspkind').cmp_format({ mode = 'symbol_text', maxwidth = 50 })(entry, vim_item)
             local strings = vim.split(kind.kind, '%s', { trimempty = true })
             kind.kind = ' ' .. (strings[1] or '') .. ' '
             kind.menu = ' ' .. (strings[2] or '')
-
             return kind
           end,
         },
@@ -217,16 +217,16 @@ return {
           end,
         },
         sources = cmp.config.sources({
-          { name = 'luasnip' },
-          { name = 'nvim_lsp' },
-          { name = "copilot" },
-          { name = 'nvim_lua' },
-          { name = 'path' },
-          { name = 'buffer' },
+          { name = 'copilot',  group_index = 2 },
+          { name = 'luasnip',  group_index = 2 },
+          { name = 'nvim_lsp', group_index = 2 },
+          { name = 'nvim_lua', group_index = 2 },
+          { name = 'path',     group_index = 2 },
+          { name = 'buffer',   group_index = 2 },
         }),
         mapping = cmp.mapping.preset.insert({
           ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
+            if cmp.visible() and has_words_before() then
               cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
@@ -248,11 +248,28 @@ return {
           end, { 'i', 's' }),
           ['<CR>'] = cmp.mapping.confirm({ select = false }),
         }),
+        --sorting = {
+          --priority_weight = 2,
+          --comparators = {
+            --require("copilot_cmp.comparators").prioritize,
 
+            ---- Below is the default comparitor list and order for nvim-cmp
+            --cmp.config.compare.offset,
+            ---- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+            --cmp.config.compare.exact,
+            --cmp.config.compare.score,
+            --cmp.config.compare.recently_used,
+            --cmp.config.compare.locality,
+            --cmp.config.compare.kind,
+            --cmp.config.compare.sort_text,
+            --cmp.config.compare.length,
+            --cmp.config.compare.order,
+          --},
+        --},
         experimental = {
           ghost_text = true,
         },
       })
     end,
-  }
+  },
 }
