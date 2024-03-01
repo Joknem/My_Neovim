@@ -16,8 +16,6 @@ vim.opt.encoding = "UTF-8"
 vim.opt.signcolumn = "yes"
 vim.opt.termguicolors = true
 vim.opt.autochdir = true
---vim.opt.list = true
---vim.opt.listchars = "tab:>•,nbsp:+,trail:•,extends:⮕,precedes:⬅"
 vim.opt.undofile = true
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	pattern = { "*" },

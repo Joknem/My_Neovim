@@ -10,7 +10,7 @@ return {
     config = function()
       local servers = {
         bashls = {},
-        clangd = {},
+        clangd = { cmd = { "clangd", "--offset-encoding=utf-16", } },
         jsonls = {},
         pyright = {},
         lua_ls = {
@@ -104,7 +104,6 @@ return {
         outline = {
           keys = {
             quit = 'Q',
-            toggle_or_jump = '<CR>',
           }
         },
         finder = {
@@ -117,13 +116,16 @@ return {
         definition = {
           keys = {
             edit = '<C-o>',
-            vsplit = '<C-v>',
+            vsplit = '<c-v>',
           }
         },
         code_action = {
           keys = {
             quit = 'Q',
           }
+        },
+        hover_doc = {
+          keys = 'K',
         },
       })
 
@@ -201,7 +203,7 @@ return {
           fields = { 'kind', 'abbr', 'menu' },
           format = function(entry, vim_item)
             local kind =
-                require('lspkind').cmp_format({ mode = 'symbol_text', maxwidth = 50 })(entry, vim_item)
+                require('lspkind').cmp_format({ mode = 'symbol', maxwidth = 50 })(entry, vim_item)
             local strings = vim.split(kind.kind, '%s', { trimempty = true })
             kind.kind = ' ' .. (strings[1] or '') .. ' '
             kind.menu = ' ' .. (strings[2] or '')
@@ -217,6 +219,7 @@ return {
         sources = cmp.config.sources({
           { name = 'luasnip' },
           { name = 'nvim_lsp' },
+          { name = "copilot" },
           { name = 'nvim_lua' },
           { name = 'path' },
           { name = 'buffer' },
