@@ -185,6 +185,34 @@ return {
       end
       require('luasnip.loaders.from_snipmate').lazy_load()
       local luasnip = require('luasnip')
+      local kind_icons = {
+        copilot = "",
+        Text = "󰉿",
+        Method = "󰆧",
+        Function = "󰊕",
+        Constructor = "",
+        Field = "󰜢",
+        Variable = "󰀫",
+        Class = "󰠱",
+        Interface = "",
+        Module = "",
+        Property = "󰜢",
+        Unit = "󰑭",
+        Value = "󰎠",
+        Enum = "",
+        Keyword = "󰌋",
+        Snippet = "",
+        Color = "󰏘",
+        File = "󰈙",
+        Reference = "󰈇",
+        Folder = "󰉋",
+        EnumMember = "",
+        Constant = "󰏿",
+        Struct = "󰙅",
+        Event = "",
+        Operator = "󰆕",
+        TypeParameter = "",
+      }
       local cmp = require('cmp')
       cmp.setup({
         window = {
@@ -202,13 +230,11 @@ return {
           },
         },
         formatting = {
-          fields = { 'kind', 'abbr', 'menu' },
+          fields = { "kind", "abbr", "menu" },
           format = function(entry, vim_item)
-            local kind = require('lspkind').cmp_format({ mode = 'symbol_text', maxwidth = 50 })(entry, vim_item)
-            local strings = vim.split(kind.kind, '%s', { trimempty = true })
-            kind.kind = ' ' .. (strings[1] or '') .. ' '
-            kind.menu = ' ' .. (strings[2] or '')
-            return kind
+            -- Kind icons
+             vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+            return vim_item
           end,
         },
         snippet = {
@@ -226,8 +252,10 @@ return {
         }),
         mapping = cmp.mapping.preset.insert({
           ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() and has_words_before() then
+            if cmp.visible() then
               cmp.select_next_item()
+            elseif require("copilot.suggestion").is_visible() then
+              require("copilot.suggestion").accept()
             elseif luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
             elseif has_words_before() then
@@ -249,25 +277,25 @@ return {
           ['<CR>'] = cmp.mapping.confirm({ select = false }),
         }),
         --sorting = {
-          --priority_weight = 2,
-          --comparators = {
-            --require("copilot_cmp.comparators").prioritize,
+        --priority_weight = 2,
+        --comparators = {
+        --require("copilot_cmp.comparators").prioritize,
 
-            ---- Below is the default comparitor list and order for nvim-cmp
-            --cmp.config.compare.offset,
-            ---- cmp.config.compare.scopes, --this is commented in nvim-cmp too
-            --cmp.config.compare.exact,
-            --cmp.config.compare.score,
-            --cmp.config.compare.recently_used,
-            --cmp.config.compare.locality,
-            --cmp.config.compare.kind,
-            --cmp.config.compare.sort_text,
-            --cmp.config.compare.length,
-            --cmp.config.compare.order,
-          --},
+        ---- Below is the default comparitor list and order for nvim-cmp
+        --cmp.config.compare.offset,
+        ---- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+        --cmp.config.compare.exact,
+        --cmp.config.compare.score,
+        --cmp.config.compare.recently_used,
+        --cmp.config.compare.locality,
+        --cmp.config.compare.kind,
+        --cmp.config.compare.sort_text,
+        --cmp.config.compare.length,
+        --cmp.config.compare.order,
+        --},
         --},
         experimental = {
-          ghost_text = true,
+          ghost_text = false,
         },
       })
     end,
