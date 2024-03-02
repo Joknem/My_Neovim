@@ -9,7 +9,7 @@
   "copilot-cmp": { "branch": "master", "commit": "72fbaa03695779f8349be3ac54fa8bd77eed3ee3" },
   "copilot.lua": { "branch": "master", "commit": "03f825956ec49e550d07875d867ea6e7c4dc8c00" },
   "dashboard-nvim": { "branch": "master", "commit": "63df28409d940f9cac0a925df09d3dc369db9841" },
-  "gruvbox.nvim": { "branch": "main", "commit": "4176b0b720db0c90ab4030e5c1b4893faf41fd51" },
+  "flybuf.nvim": { "branch": "main", "commit": "fe1fbd9699f6988a1db3b2e2ffa599154784c6e1" },
   "guard-collection": { "branch": "main", "commit": "13e00d19f418d68977c6bc803f0d23d09dce580d" },
   "guard.nvim": { "branch": "main", "commit": "d4782860b7da344d7409edbe7ee3693d5b8ea226" },
   "lazy.nvim": { "branch": "main", "commit": "96584866b9c5e998cbae300594d0ccfd0c464627" },
@@ -29,7 +29,9 @@
   "plenary.nvim": { "branch": "master", "commit": "50012918b2fc8357b87cff2a7f7f0446e47da174" },
   "rainbow-delimiters.nvim": { "branch": "master", "commit": "35530b4ad48f01bdaa852da34e4de9930fb54c89" },
   "ranger.nvim": { "branch": "main", "commit": "5df4122f51b8fd07c7cadee9f2134059c93c89c2" },
+  "sweetie.nvim": { "branch": "master", "commit": "1aa6acc8172bdeb1013c18cbe6da027c650c75c1" },
   "telescope.nvim": { "branch": "master", "commit": "7011eaae0ac1afe036e30c95cf80200b8dc3f21a" },
   "todo-comments.nvim": { "branch": "main", "commit": "833d8dd8b07eeda37a09e99460f72a02616935cb" },
+  "tool.nvim": { "branch": "main", "commit": "91298497ec08c66dfeeceef36727b9a245a2c4eb" },
   "wilder.nvim": { "branch": "master", "commit": "679f348dc90d80ff9ba0e7c470c40a4d038dcecf" }
 }

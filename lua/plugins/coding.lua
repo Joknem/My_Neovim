@@ -63,4 +63,34 @@ return {
     opts = {
     }
   },
+  {
+    'nvimdev/flybuf.nvim',
+    lazy = true,
+    keys = '<leader>bf',
+    config = function()
+      require('flybuf').setup({
+        hotkey = 'joknem',  -- hotkye
+        border = 'rounded', -- border
+        quit = 'q',         -- quit flybuf window
+        mark = 'l',         -- mark as delet or cancel delete
+        delete = 'd',       -- delete marked buffers or buffers which cursor in
+      })
+      vim.keymap.set('n', '<leader>bf', '<cmd>FlyBuf<CR>', {})
+    end
+  },
+  {
+    'folke/flash.nvim',
+    lazy = true,
+    opts = {},
+    keys = {
+      {
+        '<leader>j',
+        mode = 'n',
+        function()
+          require('flash').jump()
+        end,
+        desc = 'Flash'
+      },
+    },
+  },
 }
