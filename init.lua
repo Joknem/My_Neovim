@@ -36,8 +36,8 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 	end,
 })
 local opt = { noremap = true, silent = true }
-vim.keymap.set("n", "k", [[v:count ? 'k' : 'gk']], { noremap = true, expr = true })
 vim.g.mapleader = " "
+vim.keymap.set("n", "k", [[v:count ? 'k' : 'gk']], { noremap = true, expr = true })
 vim.keymap.set({'n','t'}, '<leader>mm', '<cmd>Lspsaga term_toggle<CR>')
 vim.keymap.set("n", "<leader>z", ":Files<CR>")
 vim.keymap.set("n", "<leader>-", "<C-W>s")

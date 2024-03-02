@@ -173,8 +173,8 @@ return {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'onsails/lspkind.nvim',
-      --"zbirenbaum/copilot.lua",
-      --"zbirenbaum/copilot-cmp",
+      "zbirenbaum/copilot.lua",
+      "zbirenbaum/copilot-cmp",
     },
     config = function()
       local has_words_before = function()
@@ -185,34 +185,6 @@ return {
       end
       require('luasnip.loaders.from_snipmate').lazy_load()
       local luasnip = require('luasnip')
-      local kind_icons = {
-        copilot = "",
-        Text = "󰉿",
-        Method = "󰆧",
-        Function = "󰊕",
-        Constructor = "",
-        Field = "󰜢",
-        Variable = "󰀫",
-        Class = "󰠱",
-        Interface = "",
-        Module = "",
-        Property = "󰜢",
-        Unit = "󰑭",
-        Value = "󰎠",
-        Enum = "",
-        Keyword = "󰌋",
-        Snippet = "",
-        Color = "󰏘",
-        File = "󰈙",
-        Reference = "󰈇",
-        Folder = "󰉋",
-        EnumMember = "",
-        Constant = "󰏿",
-        Struct = "󰙅",
-        Event = "",
-        Operator = "󰆕",
-        TypeParameter = "",
-      }
       local cmp = require('cmp')
       cmp.setup({
         window = {
@@ -230,11 +202,15 @@ return {
           },
         },
         formatting = {
-          fields = { "kind", "abbr", "menu" },
+          fields = { 'kind', 'abbr', 'menu' },
           format = function(entry, vim_item)
-            -- Kind icons
-             vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-            return vim_item
+            local kind =
+                require('lspkind').cmp_format({ mode = 'symbol_text', maxwidth = 50 })(entry, vim_item)
+            local strings = vim.split(kind.kind, '%s', { trimempty = true })
+            kind.kind = ' ' .. (strings[1] or '') .. ' '
+            kind.menu = ' ' .. (strings[2] or '')
+
+            return kind
           end,
         },
         snippet = {
@@ -243,12 +219,12 @@ return {
           end,
         },
         sources = cmp.config.sources({
-          { name = 'copilot',  group_index = 2 },
-          { name = 'luasnip',  group_index = 2 },
-          { name = 'nvim_lsp', group_index = 2 },
-          { name = 'nvim_lua', group_index = 2 },
-          { name = 'path',     group_index = 2 },
-          { name = 'buffer',   group_index = 2 },
+          { name = 'copilot', },
+          { name = 'luasnip', },
+          { name = 'nvim_lsp', },
+          { name = 'nvim_lua', },
+          { name = 'path', },
+          { name = 'buffer', },
         }),
         mapping = cmp.mapping.preset.insert({
           ['<Tab>'] = cmp.mapping(function(fallback)
@@ -295,7 +271,7 @@ return {
         --},
         --},
         experimental = {
-          ghost_text = false,
+          ghost_text = true,
         },
       })
     end,
