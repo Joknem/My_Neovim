@@ -84,7 +84,7 @@ return {
     opts = {},
     keys = {
       {
-        '<leader>j',
+        '<leader><leader>f',
         mode = 'n',
         function()
           require('flash').jump()
