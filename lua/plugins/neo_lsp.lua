@@ -11,7 +11,7 @@ return {
       local servers = {
         bashls = {},
         clangd = { cmd = { "clangd", "--offset-encoding=utf-16", } },
-        r_language_server = { cmd = {"radian"}},
+        r_language_server = {},
         jsonls = {},
         pyright = {},
         lua_ls = {
