@@ -11,8 +11,8 @@ return {
       local servers = {
         bashls = {},
         clangd = { cmd = { "clangd", "--offset-encoding=utf-16", } },
-        jsonls = {},
         pyright = {},
+        jsonls = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -219,12 +219,13 @@ return {
           end,
         },
         sources = cmp.config.sources({
-          { name = 'copilot', },
-          { name = 'luasnip', },
-          { name = 'nvim_lsp', },
-          { name = 'nvim_lua', },
-          { name = 'path', },
-          { name = 'buffer', },
+          { name = "jupynium", priority = 1000 },
+          { name = 'copilot', priority = 100},
+          { name = 'luasnip', priority = 100},
+          { name = 'nvim_lsp', priority = 100},
+          { name = 'nvim_lua', priority = 100},
+          { name = 'path', priority = 100},
+          { name = 'buffer', priority = 100},
         }),
         mapping = cmp.mapping.preset.insert({
           ['<Tab>'] = cmp.mapping(function(fallback)

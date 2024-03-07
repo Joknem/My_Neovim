@@ -6,3 +6,4 @@
 - pyright
 - black(python format)
 - pynvim
+- jupyter

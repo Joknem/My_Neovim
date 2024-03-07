@@ -158,4 +158,7 @@ return {
     'nvim-tree/nvim-web-devicons',
     lazy = true,
   },
+  {
+     "rcarriga/nvim-notify",
+  }
 }
