@@ -69,7 +69,7 @@ return {
     keys = '<leader>bf',
     config = function()
       require('flybuf').setup({
-        hotkey = 'joknem',  -- hotkye
+        hotkey = 'asdfghjklzxcvbnm',  -- hotkye
         border = 'rounded', -- border
         quit = 'q',         -- quit flybuf window
         mark = 'l',         -- mark as delet or cancel delete

@@ -38,7 +38,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 local opt = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.keymap.set("n", "k", [[v:count ? 'k' : 'gk']], { noremap = true, expr = true })
-vim.keymap.set({'n','t'}, '<leader>mm', '<cmd>Lspsaga term_toggle<CR>')
 --vim.keymap.set({'n','t'}, '<leader><leader>x', '')
 vim.keymap.set("n", "<leader>z", ":Files<CR>")
 vim.keymap.set("n", "<leader>-", "<C-W>s")
@@ -60,6 +59,7 @@ vim.keymap.set("n", "<leader>nh", ":nohlsearch<CR>", opt)
 vim.keymap.set("n", "<leader>p", ":Files<CR>")
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+vim.keymap.set("n", "<leader>do", ":TodoQuickFix<CR>")
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({

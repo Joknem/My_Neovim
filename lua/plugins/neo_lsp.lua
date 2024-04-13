@@ -74,6 +74,7 @@ return {
           vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
         end
 
+        nmap("<leader>mm", "<cmd>Lspsaga term_toggle<CR>", "Open terminal")
         nmap('gpd', '<cmd>Lspsaga peek_definition<CR>', 'Peek Definition')
         nmap('gpr', '<cmd>Telescope lsp_references<CR>', 'Peek References')
         nmap('<s-k>', '<cmd>Lspsaga hover_doc<CR>', 'Hover Documentation')
