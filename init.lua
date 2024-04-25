@@ -60,6 +60,7 @@ vim.keymap.set("n", "<leader>p", ":Files<CR>")
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>do", ":TodoQuickFix<CR>")
+vim.keymap.set("n", "<leader>ee", ":TroubleToggle<CR>")
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({

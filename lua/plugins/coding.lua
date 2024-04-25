@@ -69,11 +69,11 @@ return {
     keys = '<leader>bf',
     config = function()
       require('flybuf').setup({
-        hotkey = 'asdfghjklzxcvbnm',  -- hotkye
-        border = 'rounded', -- border
-        quit = 'q',         -- quit flybuf window
-        mark = 'l',         -- mark as delet or cancel delete
-        delete = 'd',       -- delete marked buffers or buffers which cursor in
+        hotkey = 'asdfghjklzxcvbnm', -- hotkye
+        border = 'rounded',          -- border
+        quit = 'q',                  -- quit flybuf window
+        mark = 'l',                  -- mark as delet or cancel delete
+        delete = 'd',                -- delete marked buffers or buffers which cursor in
       })
       vim.keymap.set('n', '<leader>bf', '<cmd>FlyBuf<CR>', {})
     end
@@ -93,4 +93,13 @@ return {
       },
     },
   },
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+  }
 }
