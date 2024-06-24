@@ -1,12 +1,8 @@
 return {
   {
-    "folke/twilight.nvim",
-    config = function ()
-      require("twilight").setup(
-      {
-        terminal = true,
-      }
-      )
+    "navarasu/onedark.nvim",
+    config = function()
+      require("onedark").load()
     end
   },
   {
@@ -42,7 +38,7 @@ return {
       })
     end,
     opts = {
-      theme = "dracula",
+      theme = "onedark",
     },
   },
   -- rainbow bracket --
