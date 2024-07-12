@@ -255,7 +255,7 @@ return {
           ['<CR>'] = cmp.mapping.confirm({ select = false }),
         }),
         experimental = {
-          --ghost_text = true,
+          ghost_text = true,
         },
       })
     end,
